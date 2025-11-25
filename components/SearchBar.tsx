@@ -19,7 +19,13 @@ export function SearchBar({value, onChange}: Props) {
                 width={16}
                 height={16}
             />
-            <TextInput style={[styles.input, {color: colors.grayDark}]} onChangeText={onChange} value={value}/>
+            <TextInput 
+                style={[styles.input, {color: colors.grayDark}]} 
+                onChangeText={onChange} 
+                value={value}
+                placeholder="Search"
+                placeholderTextColor={colors.grayMedium}
+            />
         </Row>
     )
 }
@@ -33,7 +39,6 @@ const styles = StyleSheet.create({
     },
     input: {
         flex: 1,
-        height: 16,
         fontSize: 10,
         lineHeight: 16,
     }
