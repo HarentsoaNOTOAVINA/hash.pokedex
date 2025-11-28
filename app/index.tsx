@@ -7,7 +7,7 @@ import {getPokemonId} from "@/functions/pokemon";
 import {useInfiniteFetchQuery} from "@/hooks/useFetchQuery";
 import {useThemeColors} from "@/hooks/useThemeColors";
 import React, {useState} from "react";
-import {ActivityIndicator, FlatList, Image, StyleSheet, View} from "react-native";
+import {ActivityIndicator, FlatList, Image, StyleSheet} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {SortButton} from "@/components/SortButton";
 
@@ -19,7 +19,14 @@ export default function Index() {
 
     const pokemons = data?.pages.flatMap(page => page.results.map(r => ({name: r.name, url: r.url, id: getPokemonId(r.url)}))) ?? [];
 
-    const filteredPokemons = [...(search ? pokemons.filter(pokemon => pokemon.name.toLowerCase().includes(search.toLowerCase()) || pokemon.id.toString() === search) : pokemons)].sort((a, b) => (a[sortKey] < b[sortKey] ? -1 : 1));
+    const filteredPokemons = [
+        ...(search ? pokemons.filter(
+            pokemon =>
+                pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
+                pokemon.id.toString() === search
+        )
+            : pokemons)
+    ].sort((a, b) => (a[sortKey] < b[sortKey] ? -1 : 1));
 
     return (
         <SafeAreaView style={[styles.container, {backgroundColor: colors.tint}]}>
@@ -29,7 +36,7 @@ export default function Index() {
             </Row>
 
             {/* SearchBar */}
-            <Row gap={16}>
+            <Row gap={16} style={styles.form}>
                 <SearchBar onChange={setSearch} value={search}/>
                 <SortButton value={sortKey} onChange={setSortKey} />
             </Row>
@@ -75,4 +82,7 @@ const styles = StyleSheet.create({
     list: {
         padding: 12
     },
+    form: {
+        paddingHorizontal: 12
+    }
 })
