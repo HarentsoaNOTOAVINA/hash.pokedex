@@ -1,50 +1,78 @@
-# Welcome to your Expo app 👋
+# 🎮 Pokédex - React Native Learning Project
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Welcome! 👋 This is an **open source** project built to learn and practice **React Native** development using [Expo](https://expo.dev) and the amazing [PokéAPI](https://pokeapi.co/)! 🚀
 
-## Get started
+## 📖 About This Project
 
-1. Install dependencies
+This Pokédex app is a learning resource for anyone interested in React Native development. It demonstrates:
+
+- 📱 Building mobile apps with **React Native** and **Expo**
+- 🌐 Fetching and displaying data from the **PokéAPI**
+- 🎨 Creating beautiful, interactive user interfaces
+- ⚡ Modern React patterns and best practices
+
+## 🤝 Open Source & Contributions
+
+This project is **100% open source**! Everyone is welcome to:
+
+- ⭐ Star the repository
+- 🐛 Report bugs and issues
+- 💡 Request new features or changes
+- 🔧 Submit pull requests
+- 📚 Use it as a learning resource
+- 🎓 Fork it for your own projects
+
+**Feel free to contribute!** Whether you're fixing a typo, adding a feature, or improving the code, all contributions are appreciated! 💖
+
+## 🚀 Get Started
+
+1. **Install dependencies**
 
    ```bash
    npm install
    ```
 
-2. Start the app
+2. **Start the app**
 
    ```bash
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+3. **Run on your device**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   In the output, you'll find options to open the app in:
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   - 📱 [Expo Go](https://expo.dev/go) - Quick preview on your phone
+   - 🤖 [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+   - 🍎 [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+   - 🛠️ [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
 
-## Get a fresh project
+## 🛠️ Built With
 
-When you're ready, run:
+- **[React Native](https://reactnative.dev/)** - Mobile app framework
+- **[Expo](https://expo.dev)** - Development platform
+- **[PokéAPI](https://pokeapi.co/)** - Pokémon data source
+- **[React Query](https://tanstack.com/query)** - Data fetching and caching
 
-```bash
-npm run reset-project
-```
+## 📚 Learn More
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Want to dive deeper? Check out these resources:
 
-## Learn more
+- [Expo Documentation](https://docs.expo.dev/) - Learn Expo fundamentals and advanced topics
+- [React Native Docs](https://reactnative.dev/docs/getting-started) - Official React Native documentation
+- [PokéAPI Docs](https://pokeapi.co/docs/v2) - Explore the PokéAPI endpoints
+- [Learn Expo Tutorial](https://docs.expo.dev/tutorial/introduction/) - Step-by-step Expo tutorial
 
-To learn more about developing your project with Expo, look at the following resources:
+## 💬 Community & Support
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- 💬 [Expo Discord](https://chat.expo.dev) - Chat with Expo developers
+- 🐙 [Expo on GitHub](https://github.com/expo/expo) - Expo open source platform
+- 🎮 [PokéAPI Community](https://pokeapi.co/) - Learn about PokéAPI
 
-## Join the community
+## 📝 License
 
-Join our community of developers creating universal apps.
+This project is open source and available for everyone to use and learn from! 🎉
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+---
+
+Made with ❤️ for learning React Native
