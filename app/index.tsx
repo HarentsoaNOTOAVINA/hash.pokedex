@@ -10,6 +10,7 @@ import React, {useState} from "react";
 import {ActivityIndicator, FlatList, Image, StyleSheet} from "react-native";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {SortButton} from "@/components/SortButton";
+import {RootView} from "@/components/RootView";
 
 export default function Index() {
     const colors = useThemeColors();
@@ -17,19 +18,23 @@ export default function Index() {
     const [search, setSearch] = useState('');
     const [sortKey, setSortKey] = useState<"id" | "name">('id')
 
-    const pokemons = data?.pages.flatMap(page => page.results.map(r => ({name: r.name, url: r.url, id: getPokemonId(r.url)}))) ?? [];
+    const pokemons = data?.pages.flatMap(page => page.results.map(r => ({
+        name: r.name,
+        url: r.url,
+        id: getPokemonId(r.url)
+    }))) ?? [];
 
     const filteredPokemons = [
         ...(search ? pokemons.filter(
-            pokemon =>
-                pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
-                pokemon.id.toString() === search
-        )
+                pokemon =>
+                    pokemon.name.toLowerCase().includes(search.toLowerCase()) ||
+                    pokemon.id.toString() === search
+            )
             : pokemons)
     ].sort((a, b) => (a[sortKey] < b[sortKey] ? -1 : 1));
 
     return (
-        <SafeAreaView style={[styles.container, {backgroundColor: colors.tint}]}>
+        <RootView>
             <Row style={styles.header} gap={16}>
                 <Image source={require("@/assets/images/pokeball.png")} width={24} height={24}/>
                 <ThemedText variant="headline" color="grayLight">Pokedex</ThemedText>
@@ -38,7 +43,7 @@ export default function Index() {
             {/* SearchBar */}
             <Row gap={16} style={styles.form}>
                 <SearchBar onChange={setSearch} value={search}/>
-                <SortButton value={sortKey} onChange={setSortKey} />
+                <SortButton value={sortKey} onChange={setSortKey}/>
             </Row>
 
             <Card style={styles.body}>
@@ -57,20 +62,15 @@ export default function Index() {
                 />
 
             </Card>
-        </SafeAreaView>
+        </RootView>
     );
 }
 
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 4,
-        gap: 16,
-    },
     header: {
         paddingHorizontal: 12,
-        paddingVertical: 8,
+        paddingBottom: 8,
     },
     body: {
         flex: 1,
