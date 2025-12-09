@@ -1,16 +1,17 @@
-import {Card} from "@/components/Card";
-import {PokemonSpec} from "@/components/pokemon/PokemonSpec";
-import {PokemonStat} from "@/components/pokemon/PokemonStat";
-import {PokemonType} from "@/components/pokemon/PokemonType";
-import {RootView} from "@/components/RootView";
-import {Row} from "@/components/Row";
+import { Card } from "@/components/Card";
+import { PokemonSpec } from "@/components/pokemon/PokemonSpec";
+import { PokemonStat } from "@/components/pokemon/PokemonStat";
+import { PokemonType } from "@/components/pokemon/PokemonType";
+import { RootView } from "@/components/RootView";
+import { Row } from "@/components/Row";
 import ThemedText from "@/components/ThemedText";
-import {Colors} from "@/constants/Color";
-import {formatNumber} from "@/functions/pokemon";
-import {useFetchQuery} from "@/hooks/useFetchQuery";
-import {useThemeColors} from "@/hooks/useThemeColors";
-import {router, useLocalSearchParams} from "expo-router";
-import {ActivityIndicator, Image, Pressable, StyleSheet, View} from "react-native";
+import { Colors } from "@/constants/Color";
+import {formatNumber, getAvailableSprites} from "@/functions/pokemon";
+import { useFetchQuery } from "@/hooks/useFetchQuery";
+import { useThemeColors } from "@/hooks/useThemeColors";
+import { router, useLocalSearchParams } from "expo-router";
+import React, { useState } from "react";
+import { ActivityIndicator, Image, Pressable, StyleSheet, View } from "react-native";
 
 export default function PokemonDetail() {
     const params = useLocalSearchParams() as { id: string };
@@ -23,6 +24,21 @@ export default function PokemonDetail() {
 
     const bio = species?.flavor_text_entries?.find(({language}) => language.name === 'en')
         ?.flavor_text.replaceAll("\n", ". ");
+
+    // Sprite navigation state
+    const [currentSpriteIndex, setCurrentSpriteIndex] = useState(0);
+
+
+
+    const availableSprites = getAvailableSprites(pokemon);
+
+    const handlePreviousSprite = () => {
+        setCurrentSpriteIndex((prev) => (prev > 0 ? prev - 1 : availableSprites.length - 1));
+    };
+
+    const handleNextSprite = () => {
+        setCurrentSpriteIndex((prev) => (prev < availableSprites.length - 1 ? prev + 1 : 0));
+    };
 
     if (isLoading || !pokemon) {
         return (
@@ -53,14 +69,28 @@ export default function PokemonDetail() {
                 </Row>
             </View>
 
-            {/* Pokemon Image */}
-            <View style={styles.imageContainer}>
+            {/* Pokemon Image with Navigation */}
+            <Row style={styles.imageContainer}>
+                {/* Left chevron */}
+                {availableSprites.length > 1 && (
+                    <Pressable onPress={handlePreviousSprite} style={styles.chevronLeft}>
+                        <Image source={require('@/assets/images/chevron-left.png')} />
+                    </Pressable>
+                )}
+                
                 <Image
-                    source={{uri: pokemon.sprites.other['official-artwork'].front_default}}
+                    source={{uri: availableSprites[currentSpriteIndex]?.uri}}
                     style={styles.image}
                     resizeMode="contain"
                 />
-            </View>
+                
+                {/* Right chevron */}
+                {availableSprites.length > 1 && (
+                    <Pressable onPress={handleNextSprite} style={styles.chevronRight}>
+                        <Image source={require('@/assets/images/chevron-right.png')} />
+                    </Pressable>
+                )}
+            </Row>
 
             {/* Card with details - overlapping the image */}
             <View style={styles.scrollView}>
@@ -209,5 +239,27 @@ const styles = StyleSheet.create({
         width: 1,
         height: '100%',
         backgroundColor: '#E0E0E0',
+    },
+    chevronLeft: {
+        position: 'absolute',
+        left: -60,
+        top: '50%',
+        transform: [{translateY: -20}],
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 20,
+    },
+    chevronRight: {
+        position: 'absolute',
+        right: -60,
+        top: '50%',
+        transform: [{translateY: -20}],
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        zIndex: 20,
     },
 });

@@ -8,7 +8,7 @@ import Animated, {
     useAnimatedStyle,
     useSharedValue, withTiming
 } from "react-native-reanimated";
-import {useEffect} from "react";
+import React, {useEffect} from "react";
 
 type Props = ViewProps & {
     backgroundColor?: string;
