@@ -12,10 +12,9 @@ type Props = {
             url: string
         }
     }[],
-    typeColor: string
 }
 
-export function PokemonType({types, typeColor}: Props) {
+export function PokemonType({types}: Props) {
     return (
         <Row gap={8} style={styles.typesContainer}>
             {types.map((type) => (
@@ -23,7 +22,7 @@ export function PokemonType({types, typeColor}: Props) {
                     key={type.slot}
                     style={[
                         styles.typeBadge,
-                        {backgroundColor: typeColor}
+                        {backgroundColor: Colors.type[type.type.name]}
                     ]}
                 >
                     <ThemedText color="grayWhite" variant="caption" style={styles.typeText}>

@@ -1,7 +1,7 @@
-export function getPokemonId(url: string): number{
-    return parseInt(url.split('/').at(-2)!, 10)
-}
+export const getPokemonId = (url: string): number => parseInt(url.split('/').at(-2)!, 10);
 
-export function getPokemonArtWorkUrl(id: number | string): string{
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+export const getPokemonArtWorkUrl = (id: number | string): string => `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+export function formatNumber(num: number) : string {
+    return (num / 10).toFixed(1);
 }

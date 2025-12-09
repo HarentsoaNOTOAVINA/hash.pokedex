@@ -1,24 +1,28 @@
-import { Card } from "@/components/Card";
-import { PokemonType } from "@/components/pokemon/PokemonType";
-import { RootView } from "@/components/RootView";
-import { Row } from "@/components/Row";
+import {Card} from "@/components/Card";
+import {PokemonSpec} from "@/components/pokemon/PokemonSpec";
+import {PokemonStat} from "@/components/pokemon/PokemonStat";
+import {PokemonType} from "@/components/pokemon/PokemonType";
+import {RootView} from "@/components/RootView";
+import {Row} from "@/components/Row";
 import ThemedText from "@/components/ThemedText";
-import { Colors } from "@/constants/Color";
-import { useFetchQuery } from "@/hooks/useFetchQuery";
-import { useThemeColors } from "@/hooks/useThemeColors";
-import { router, useLocalSearchParams } from "expo-router";
-import React, { useEffect } from "react";
-import { ActivityIndicator, Image, Pressable, StyleSheet, View } from "react-native";
+import {Colors} from "@/constants/Color";
+import {formatNumber} from "@/functions/pokemon";
+import {useFetchQuery} from "@/hooks/useFetchQuery";
+import {useThemeColors} from "@/hooks/useThemeColors";
+import {router, useLocalSearchParams} from "expo-router";
+import {ActivityIndicator, Image, Pressable, StyleSheet, View} from "react-native";
 
 export default function PokemonDetail() {
     const params = useLocalSearchParams() as { id: string };
     const colors = useThemeColors();
-    const {data: pokemon, isLoading} = useFetchQuery('/pokemon/{id}', { id: params.id });
-    useEffect(() => {
+    const {data: pokemon, isLoading} = useFetchQuery('/pokemon/{id}', {id: params.id});
+    const {data: species} = useFetchQuery('/pokemon-species/{id}', {id: params.id});
 
-    }, []);
     const mainType = pokemon?.types[0].type.name;
     const typeColor = mainType ? Colors.type[mainType] : colors.tint
+
+    const bio = species?.flavor_text_entries?.find(({language}) => language.name === 'en')
+        ?.flavor_text.replaceAll("\n", ". ");
 
     if (isLoading || !pokemon) {
         return (
@@ -29,7 +33,7 @@ export default function PokemonDetail() {
     }
 
     return (
-        <RootView style={{flex: 1, backgroundColor: typeColor}}>
+        <RootView  backgroundColor={typeColor}>
             {/* Header with back button */}
             <View>
                 <Image style={styles.pokeball} source={require('@/assets/images/pokeball-opaque.png')} width={208}
@@ -62,53 +66,51 @@ export default function PokemonDetail() {
             <View style={styles.scrollView}>
                 <Card style={styles.card}>
                     {/* Types */}
-                    <PokemonType types={pokemon.types} typeColor={typeColor} />
+                    <PokemonType types={pokemon.types}/>
 
                     {/* About Section Title */}
-                    <ThemedText variant="subtitle1" style={[styles.sectionTitle, {color: typeColor, textAlign: 'center'}]}>
+                    <ThemedText variant="subtitle1"
+                                style={[styles.sectionTitle, {color: typeColor, textAlign: 'center'}]}>
                         About
                     </ThemedText>
 
                     {/* Physical Stats with icons */}
-                    <Row gap={24} style={styles.physicalStats}>
-                        <View style={styles.statItem}>
-                            <Row gap={4} style={{alignItems: 'center'}}>
-                                <ThemedText variant="body3" style={{fontSize: 16}}>⚖️</ThemedText>
-                                <ThemedText variant="body3" style={{fontWeight: '600'}}>
-                                    {(pokemon.weight / 10).toFixed(1)} kg
-                                </ThemedText>
-                            </Row>
-                            <ThemedText variant="caption" color="grayMedium">Weight</ThemedText>
-                        </View>
-                        <View style={styles.statItem}>
-                            <Row gap={4} style={{alignItems: 'center'}}>
-                                <ThemedText variant="body3" style={{fontSize: 16}}>📏</ThemedText>
-                                <ThemedText variant="body3" style={{fontWeight: '600'}}>
-                                    {(pokemon.height / 10).toFixed(1)} m
-                                </ThemedText>
-                            </Row>
-                            <ThemedText variant="caption" color="grayMedium">Height</ThemedText>
-                        </View>
-                        <View style={styles.statItem}>
-                            <ThemedText variant="body3" style={{fontWeight: '600'}}>
-                                {pokemon.abilities[0]?.ability.name.split('-').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join('-')}
-                            </ThemedText>
-                            <ThemedText variant="caption" color="grayMedium">Moves</ThemedText>
-                        </View>
+                    <Row style={styles.physicalStats}>
+                        <PokemonSpec
+                            image={require('@/assets/images/weight.png')}
+                            title={`${formatNumber(pokemon.weight)} kg`}
+                            description="Weight"
+                        />
+                        <View style={styles.separator}/>
+                        <PokemonSpec
+                            image={require('@/assets/images/height.png')}
+                            title={`${formatNumber(pokemon.height / 10)} m`}
+                            description="Height"
+                        />
+                        <View style={styles.separator}/>
+                        <PokemonSpec
+                            title={pokemon?.moves
+                                .slice(0, 2)
+                                .map((move) => move.move.name)
+                                .join('\n')
+                            }
+                            description="Moves"
+                        />
                     </Row>
 
                     {/* Pokemon Description */}
                     <ThemedText variant="body3" color="grayMedium" style={styles.description}>
-                        When it retracts its long neck into its shell, it squirts out water with vigorous force.
+                        {bio}
                     </ThemedText>
 
                     {/* Base Stats */}
                     <View style={styles.section}>
-                        <ThemedText variant="subtitle1" style={[styles.sectionTitle, {color: typeColor, textAlign: 'center'}]}>
+                        <ThemedText variant="subtitle1"
+                                    style={[styles.sectionTitle, {color: typeColor, textAlign: 'center'}]}>
                             Base Stats
                         </ThemedText>
                         {pokemon.stats.map((stat) => {
-                            const statNames: {[key: string]: string} = {
+                            const statNames: { [key: string]: string } = {
                                 'hp': 'HP',
                                 'attack': 'ATK',
                                 'defense': 'DEF',
@@ -117,28 +119,8 @@ export default function PokemonDetail() {
                                 'speed': 'SPD'
                             };
                             const displayName = statNames[stat.stat.name] || stat.stat.name.toUpperCase();
-                            
-                            return (
-                                <View key={stat.stat.name} style={styles.statRow}>
-                                    <ThemedText variant="body3" style={[styles.statName, {color: typeColor, fontWeight: '600'}]}>
-                                        {displayName}
-                                    </ThemedText>
-                                    <ThemedText variant="body3" style={styles.statValue}>
-                                        {stat.base_stat.toString().padStart(3, '0')}
-                                    </ThemedText>
-                                    <View style={styles.statBarContainer}>
-                                        <View
-                                            style={[
-                                                styles.statBar,
-                                                {
-                                                    width: `${(stat.base_stat / 255) * 100}%`,
-                                                    backgroundColor: typeColor
-                                                }
-                                            ]}
-                                        />
-                                    </View>
-                                </View>
-                            );
+
+                            return <PokemonStat key={stat.stat.name} stat={stat} typeColor={typeColor} displayName={displayName} />;
                         })}
                     </View>
                 </Card>
@@ -191,7 +173,9 @@ const styles = StyleSheet.create({
     },
 
     physicalStats: {
+        flexDirection: 'row',
         justifyContent: 'space-around',
+        alignItems: 'stretch',
         marginBottom: 16,
         marginTop: 8,
     },
@@ -221,32 +205,9 @@ const styles = StyleSheet.create({
         borderRadius: 12,
         backgroundColor: '#f0f0f0',
     },
-    statRow: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-    statName: {
-        width: 50,
-        fontSize: 12,
-    },
-    statValue: {
-        width: 35,
-        textAlign: 'left',
-        fontWeight: '600',
-        fontSize: 12,
-    },
-    statBarContainer: {
-        flex: 1,
-        height: 6,
-        backgroundColor: '#e8e8e8',
-        borderRadius: 3,
-        marginLeft: 8,
-        overflow: 'hidden',
-    },
-    statBar: {
+    separator: {
+        width: 1,
         height: '100%',
-        borderRadius: 3,
+        backgroundColor: '#E0E0E0',
     },
-
 });

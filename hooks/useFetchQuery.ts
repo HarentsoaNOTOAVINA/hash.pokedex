@@ -1,5 +1,5 @@
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query"
-import {Colors} from "@/constants/Color";
+import { Colors } from "@/constants/Color";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 const endpoint = "https://pokeapi.co/api/v2"
 
@@ -44,7 +44,21 @@ type API = {
                     front_default: string
                 }
             }
-        }
+        },
+        moves: {
+            move: {
+                name: string,
+                url: string
+            }
+        }[]
+    },
+    '/pokemon-species/{id}': {
+        flavor_text_entries: {
+            flavor_text: string,
+            language: {
+                name: string
+            },
+        }[];
     }
 }
 

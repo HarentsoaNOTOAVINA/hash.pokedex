@@ -26,7 +26,7 @@ export const Colors = {
         flying: "#A891EC",
         ghost: "#70559B",
         normal: "#AAA67F",
-        grace: "#74CB48",
+        grass: "#74CB48",
         ground: "#DEC16B",
         ice: "#9AD6DF",
         poison: "#A43E9E",
