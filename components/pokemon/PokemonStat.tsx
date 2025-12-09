@@ -24,7 +24,7 @@ export function PokemonStat({stat, typeColor, displayName}: Props) {
         animatedWidth.value = withTiming(targetValue, {
             duration: 1000,
         });
-    }, [targetValue]);
+    }, [animatedWidth, targetValue]);
 
     const barAnimatedStyle = useAnimatedStyle(() => {
         return {
