@@ -50,7 +50,11 @@ type API = {
                 name: string,
                 url: string
             }
-        }[]
+        }[],
+        cries: {
+            latest: string,
+            legacy: string
+        }
     },
     '/pokemon-species/{id}': {
         flavor_text_entries: {

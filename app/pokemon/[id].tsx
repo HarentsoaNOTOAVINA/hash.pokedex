@@ -6,9 +6,10 @@ import { RootView } from "@/components/RootView";
 import { Row } from "@/components/Row";
 import ThemedText from "@/components/ThemedText";
 import { Colors } from "@/constants/Color";
-import {formatNumber, getAvailableSprites} from "@/functions/pokemon";
+import { formatNumber, getAvailableSprites } from "@/functions/pokemon";
 import { useFetchQuery } from "@/hooks/useFetchQuery";
 import { useThemeColors } from "@/hooks/useThemeColors";
+import { useAudioPlayer } from 'expo-audio';
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useState } from "react";
 import { ActivityIndicator, Image, Pressable, StyleSheet, View } from "react-native";
@@ -27,7 +28,9 @@ export default function PokemonDetail() {
 
     // Sprite navigation state
     const [currentSpriteIndex, setCurrentSpriteIndex] = useState(0);
-
+    
+    // Audio player - preloads automatically
+    const player = useAudioPlayer(pokemon?.cries?.latest ? { uri: pokemon.cries.latest } : null);
 
 
     const availableSprites = getAvailableSprites(pokemon);
@@ -48,8 +51,16 @@ export default function PokemonDetail() {
         );
     }
 
+    const onImagePress = () => {
+        if (!player) return;
+        
+        // Replay from start
+        player.seekTo(0);
+        player.play();
+    }
+
     return (
-        <RootView  backgroundColor={typeColor}>
+        <RootView backgroundColor={typeColor}>
             {/* Header with back button */}
             <View>
                 <Image style={styles.pokeball} source={require('@/assets/images/pokeball-opaque.png')} width={208}
@@ -74,20 +85,21 @@ export default function PokemonDetail() {
                 {/* Left chevron */}
                 {availableSprites.length > 1 && (
                     <Pressable onPress={handlePreviousSprite} style={styles.chevronLeft}>
-                        <Image source={require('@/assets/images/chevron-left.png')} />
+                        <Image source={require('@/assets/images/chevron-left.png')}/>
                     </Pressable>
                 )}
-                
-                <Image
-                    source={{uri: availableSprites[currentSpriteIndex]?.uri}}
-                    style={styles.image}
-                    resizeMode="contain"
-                />
-                
+                <Pressable onPress={onImagePress}>
+                    <Image
+                        source={{uri: availableSprites[currentSpriteIndex]?.uri}}
+                        style={styles.image}
+                        resizeMode="contain"
+                    />
+                </Pressable>
+
                 {/* Right chevron */}
                 {availableSprites.length > 1 && (
                     <Pressable onPress={handleNextSprite} style={styles.chevronRight}>
-                        <Image source={require('@/assets/images/chevron-right.png')} />
+                        <Image source={require('@/assets/images/chevron-right.png')}/>
                     </Pressable>
                 )}
             </Row>
@@ -150,7 +162,8 @@ export default function PokemonDetail() {
                             };
                             const displayName = statNames[stat.stat.name] || stat.stat.name.toUpperCase();
 
-                            return <PokemonStat key={stat.stat.name} stat={stat} typeColor={typeColor} displayName={displayName} />;
+                            return <PokemonStat key={stat.stat.name} stat={stat} typeColor={typeColor}
+                                                displayName={displayName}/>;
                         })}
                     </View>
                 </Card>
