@@ -1,28 +1,41 @@
 # 🎮 Pokédex - React Native Learning Project
 
-Welcome! 👋 This is an **open source** project built to learn and practice **React Native** development using [Expo](https://expo.dev) and the amazing [PokéAPI](https://pokeapi.co/)! 🚀
+Welcome! 👋 This is an **open source** project built to learn and practice **React Native** development using [Expo](https://expo.dev) (Expo SDK version `~54.0.27`) and the amazing [PokéAPI](https://pokeapi.co/). 🚀
 
 ## 📖 About This Project
 
-This Pokédex app is a learning resource for anyone interested in React Native development. It demonstrates:
+This Pokédex app serves as a learning resource for anyone interested in React Native development. It demonstrates:
 
 - 📱 Building mobile apps with **React Native** and **Expo**
 - 🌐 Fetching and displaying data from the **PokéAPI**
 - 🎨 Creating beautiful, interactive user interfaces
 - ⚡ Modern React patterns and best practices
 
+## ✨ Implemented Features
+
+- Pokémon list with infinite scroll
+- Detailed Pokémon view with stats, types, and moves
+- Swipe navigation between Pokémon
+- Audio playback of Pokémon cries
+- Animated stat bars
+- Theme switching (dark/light) with dynamic colors
+- Offline caching using React Query
+- Expo Router navigation structure
+- Gesture handling with `react-native-gesture-handler`
+- Animated transitions and UI effects
+
 ## 🤝 Open Source & Contributions
 
-This project is **100% open source**! Everyone is welcome to:
+This project is **100% open source**! Feel free to:
 
 - ⭐ Star the repository
 - 🐛 Report bugs and issues
-- 💡 Request new features or changes
+- 💡 Request new features
 - 🔧 Submit pull requests
 - 📚 Use it as a learning resource
 - 🎓 Fork it for your own projects
 
-**Feel free to contribute!** Whether you're fixing a typo, adding a feature, or improving the code, all contributions are appreciated! 💖
+**All contributions are appreciated!** 💖
 
 ## 🚀 Get Started
 
@@ -42,32 +55,30 @@ This project is **100% open source**! Everyone is welcome to:
 
    In the output, you'll find options to open the app in:
 
-   - 📱 [Expo Go](https://expo.dev/go) - Quick preview on your phone
-   - 🤖 [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-   - 🍎 [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-   - 🛠️ [Development build](https://docs.expo.dev/develop/development-builds/introduction/)
+   - 📱 [Expo Go](https://expo.dev/go) – Quick preview on your phone
+   - 🤖 Android emulator
+   - 🍎 iOS simulator
+   - 🛠️ Development build
 
 ## 🛠️ Built With
 
-- **[React Native](https://reactnative.dev/)** - Mobile app framework
-- **[Expo](https://expo.dev)** - Development platform
-- **[PokéAPI](https://pokeapi.co/)** - Pokémon data source
-- **[React Query](https://tanstack.com/query)** - Data fetching and caching
+- **[React Native](https://reactnative.dev/)** – Mobile app framework
+- **[Expo](https://expo.dev)** – Development platform
+- **[PokéAPI](https://pokeapi.co/)** – Pokémon data source
+- **[React Query](https://tanstack.com/query)** – Data fetching and caching
 
 ## 📚 Learn More
 
-Want to dive deeper? Check out these resources:
-
-- [Expo Documentation](https://docs.expo.dev/) - Learn Expo fundamentals and advanced topics
-- [React Native Docs](https://reactnative.dev/docs/getting-started) - Official React Native documentation
-- [PokéAPI Docs](https://pokeapi.co/docs/v2) - Explore the PokéAPI endpoints
-- [Learn Expo Tutorial](https://docs.expo.dev/tutorial/introduction/) - Step-by-step Expo tutorial
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Docs](https://reactnative.dev/docs/getting-started)
+- [PokéAPI Docs](https://pokeapi.co/docs/v2)
+- [Learn Expo Tutorial](https://docs.expo.dev/tutorial/introduction/)
 
 ## 💬 Community & Support
 
-- 💬 [Expo Discord](https://chat.expo.dev) - Chat with Expo developers
-- 🐙 [Expo on GitHub](https://github.com/expo/expo) - Expo open source platform
-- 🎮 [PokéAPI Community](https://pokeapi.co/) - Learn about PokéAPI
+- 💬 [Expo Discord](https://chat.expo.dev)
+- 🐙 [Expo on GitHub](https://github.com/expo/expo)
+- 🎮 [PokéAPI Community](https://pokeapi.co/)
 
 ## 📝 License
 
