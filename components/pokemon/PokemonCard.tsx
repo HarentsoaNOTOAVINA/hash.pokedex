@@ -4,6 +4,7 @@ import React from "react";
 import { Image, Pressable, StyleSheet, View, type ViewStyle } from "react-native";
 import { Card } from "../Card";
 import ThemedText from "../ThemedText";
+import {getPokemonArtWorkUrl} from "@/functions/pokemon";
 
 type Props = {
     style?: ViewStyle,
@@ -24,7 +25,7 @@ export default function PokemonCard({ style, id, name }: Props) {
                         #{id.toString().padStart(3, '0')}
                     </ThemedText>
                     <Image
-                        source={{ uri: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png` }}
+                        source={{ uri: getPokemonArtWorkUrl(id) }}
                         width={72}
                         height={72}
                     />
